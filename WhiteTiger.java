@@ -4,7 +4,7 @@ public class WhiteTiger extends Tiger {
     boolean hasInfected;
 
     public WhiteTiger(){
-        hasInfected=false;
+
     }
 
 

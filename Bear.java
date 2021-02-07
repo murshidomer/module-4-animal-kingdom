@@ -2,7 +2,7 @@ import java.awt.*;
 
 public class Bear extends Critter {
     private boolean polar;
-    private int moves;
+    private int counter;
 
     public Bear(boolean polar){
         this.polar=polar;
@@ -12,33 +12,30 @@ public class Bear extends Critter {
     public Color getColor() {
         //Color.WHITE for a polar bear (when polar is true),
         // Color.BLACK otherwise (when polar is false)
-        if (this.polar){
-            return Color.WHITE;
-        } else {
-            return Color.BLACK;
-        }
+        if (polar) return Color.WHITE;
+        else return Color.BLACK;
     }
 
     public String toString(){
         //Should alternate on each different move between a slash character (/)
         // and a backslash character () starting with a slash.
-        if (moves%2==0){
-            return "/";
-        } else {
+        if (counter % 2 == 0) {
             return "\\";
+        } else {
+            return "/";
         }
 
     }
 
     public Action getMove(CritterInfo info){
         //always infect if an enemy is in front, otherwise hop if possible, otherwise turn left.
-        moves++;
-        if(info.getFront()==Neighbor.OTHER){
+        counter++;
+        if (info.frontThreat()) {
             return Action.INFECT;
-        } else if (info.getFront()==Neighbor.EMPTY){
+        } else if (!(info.backThreat() || info.rightThreat() || info.leftThreat())) {
             return Action.HOP;
         } else {
-            return super.getMove(info);
+            return Action.LEFT;
         }
     }
 
